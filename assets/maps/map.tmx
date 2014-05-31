@@ -611,8 +611,6 @@
   <object gid="1" x="5632" y="2368"/>
   <object gid="1" x="5664" y="2368"/>
   <object gid="1" x="5696" y="2368"/>
-  <object gid="1" x="5728" y="2368"/>
-  <object gid="1" x="5824" y="2368"/>
   <object gid="1" x="5856" y="2368"/>
   <object gid="1" x="5888" y="2368"/>
   <object gid="1" x="5920" y="2368"/>
@@ -662,8 +660,20 @@
   <object gid="1" x="5856" y="2560"/>
   <object gid="1" x="5856" y="2592"/>
   <object gid="1" x="5856" y="2624"/>
-  <object gid="1" x="5856" y="2656"/>
-  <object gid="1" x="5856" y="2688"/>
+  <object gid="1" x="5728" y="2368"/>
+  <object gid="1" x="5728" y="2400"/>
+  <object gid="1" x="5728" y="2432"/>
+  <object gid="1" x="5824" y="2400"/>
+  <object gid="1" x="5824" y="2432"/>
+  <object gid="1" x="5824" y="2368"/>
+  <object gid="1" x="5888" y="2720"/>
+  <object gid="1" x="5920" y="2720"/>
+  <object gid="1" x="5952" y="2720"/>
+  <object gid="1" x="5952" y="2688"/>
+  <object gid="1" x="5952" y="2656"/>
+  <object gid="1" x="5952" y="2624"/>
+  <object gid="1" x="5920" y="2624"/>
+  <object gid="1" x="5888" y="2624"/>
  </objectgroup>
  <objectgroup name="Player" width="500" height="100">
   <object gid="2" x="320" y="2816"/>
@@ -758,18 +768,6 @@
   <object gid="3" x="5216" y="2144"/>
   <object gid="3" x="5216" y="2112"/>
   <object gid="3" x="5216" y="2080"/>
-  <object gid="3" x="5312" y="2336"/>
-  <object gid="3" x="5312" y="2304"/>
-  <object gid="3" x="5312" y="2272"/>
-  <object gid="3" x="5312" y="2144"/>
-  <object gid="3" x="5312" y="2112"/>
-  <object gid="3" x="5312" y="2080"/>
-  <object gid="3" x="5408" y="2336"/>
-  <object gid="3" x="5408" y="2304"/>
-  <object gid="3" x="5408" y="2272"/>
-  <object gid="3" x="5408" y="2144"/>
-  <object gid="3" x="5408" y="2112"/>
-  <object gid="3" x="5408" y="2080"/>
   <object gid="3" x="5504" y="2336"/>
   <object gid="3" x="5504" y="2304"/>
   <object gid="3" x="5504" y="2272"/>
@@ -790,31 +788,18 @@
   <object gid="3" x="5984" y="1984"/>
   <object gid="3" x="5984" y="1952"/>
   <object gid="3" x="5984" y="1920"/>
-  <object gid="3" x="5728" y="2400"/>
-  <object gid="3" x="5728" y="2432"/>
-  <object gid="3" x="5728" y="2464"/>
-  <object gid="3" x="5824" y="2400"/>
-  <object gid="3" x="5824" y="2432"/>
-  <object gid="3" x="5824" y="2464"/>
-  <object gid="3" x="5728" y="2496"/>
-  <object gid="3" x="5728" y="2528"/>
-  <object gid="3" x="5824" y="2528"/>
-  <object gid="3" x="5824" y="2496"/>
-  <object gid="3" x="5728" y="2560"/>
-  <object gid="3" x="5728" y="2592"/>
-  <object gid="3" x="5824" y="2560"/>
-  <object gid="3" x="5824" y="2592"/>
-  <object gid="3" x="5728" y="2624"/>
-  <object gid="3" x="5728" y="2656"/>
-  <object gid="3" x="5824" y="2624"/>
-  <object gid="3" x="5824" y="2656"/>
-  <object gid="3" x="5824" y="2688"/>
-  <object gid="3" x="5728" y="2688"/>
   <object gid="3" x="6144" y="2336"/>
   <object gid="3" x="6240" y="2336"/>
   <object gid="3" x="6240" y="2304"/>
   <object gid="3" x="6336" y="2336"/>
   <object gid="3" x="6336" y="2304"/>
   <object gid="3" x="6432" y="2336"/>
+  <object gid="3" x="5888" y="2656"/>
+  <object gid="3" x="5888" y="2688"/>
+  <object gid="3" x="5920" y="2688"/>
+  <object gid="3" x="5920" y="2656"/>
+  <object gid="3" x="5856" y="2656"/>
+  <object gid="3" x="5856" y="2656"/>
+  <object gid="3" x="5856" y="2688"/>
  </objectgroup>
 </map>
