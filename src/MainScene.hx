@@ -10,7 +10,8 @@ class MainScene extends Scene
 {
 
 	private var player:entities.Player;
-	private var currentY:Float;
+	private var cameraXAdjustTime:Float;
+	private var cameraYAdjustTime:Float;
 
 	public override function begin()
 	{
@@ -40,18 +41,17 @@ class MainScene extends Scene
 		addGraphic(new Text("But you can't.", 177*32, 86*32, 0, 0, {size: 32}));
 		addGraphic(new Text("You can just win.", 177*32, 87*32, 0, 0, {size: 32}));
 
+		camera.x = player.x - HXP.width / 2;
+		camera.y = player.y - HXP.height / 2;
+		cameraXAdjustTime = 0;
+		cameraYAdjustTime = 0;
+
 
 	}
 
 	private function adjustCamera() {
-		currentY = camera.y;
-		camera.x = player.x - HXP.width / 2;
-
-		if(player.y >= currentY + HXP.height) {
-			camera.y += HXP.height;
-		} else if(player.y < currentY) {
-			camera.y -= HXP.height;
-		}
+		camera.x = player.x - HXP.width / 2 - player.xVelocity * 2;
+		camera.y = player.y - HXP.height / 2 - player.yVelocity * 3;
 	}
 
 	public override function update() {
