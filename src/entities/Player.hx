@@ -5,6 +5,7 @@ import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 import com.haxepunk.utils.Input;
 import com.haxepunk.utils.Key;
+import com.haxepunk.Sfx;
 
 class Player extends Entity {
 
@@ -27,6 +28,8 @@ class Player extends Entity {
 
     private var jumpEnabled:Bool;
 
+    private var jumpSound:Sfx;
+
 	public function new(x:Float, y:Float) {
 		super(x, y);
 		setHitbox(32, 32);
@@ -36,15 +39,23 @@ class Player extends Entity {
         rightImage = new Image("graphics/player/playerRight.png");
         playerImage = new Image("graphics/player/player.png");
         jumpingImage = new Image("graphics/player/playerJumping.png");
+
+        #if flash
+        jumpSound = new Sfx("audio/jump.mp3");
+        #else
+        jumpSound = new Sfx("audio/jump.ogg");
+        #end
+
 		graphic = playerImage;
 
-		Input.define("right", [Key.D]);
-		Input.define("left", [Key.A]);
-        Input.define("up", [Key.W, Key.SPACE]);
-        
+		Input.define("right", [Key.D, Key.RIGHT]);
+		Input.define("left", [Key.A, Key.LEFT]);
+        Input.define("up", [Key.W, Key.SPACE, Key.UP]);
+
 		xVelocity = 0;
 		yVelocity = 0;
 		jumpEnabled = false;
+
 	}
 
 	private function move() {
@@ -83,6 +94,9 @@ class Player extends Entity {
                 xVelocity = 0;
             } else {
                 f = collide("block", x + xVelocity, y + height);
+                if(f != null && f.y < y) {
+                    xVelocity = 0;
+                }
 
             }
         }
@@ -110,6 +124,10 @@ class Player extends Entity {
 
         if (Input.check("up") && jumpEnabled) {
             yAcceleration = -1;
+            if(yVelocity == 0) {
+                jumpSound.play();
+                jumpSound.volume = .25;
+            }
         } else {
             if(!onFloor()) {
                 yAcceleration = 1;
@@ -141,7 +159,7 @@ class Player extends Entity {
 		var f:Entity = collide("block", x, y + yVelocity);
 		if(f != null) {
 			if(f.y <= this.y) {
-                moveTo(x, f.y + 32);
+                moveTo(x, f.y + 31);
 				return true;
 			} else {
 				return false;

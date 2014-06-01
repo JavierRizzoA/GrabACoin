@@ -21,7 +21,12 @@ class MainScene extends Scene
 	public function createMap() {
 		var map = TmxMap.loadFromFile("maps/map.tmx");
 		for(object in map.getObjectGroup("Blocks").objects) {
-			add(new entities.Block(object.x, object.y));
+			if(object.custom.resolve("light") == "true") {
+				add(new entities.LightBlock(object.x, object.y));
+			} else {
+				add(new entities.Block(object.x, object.y));
+			}
+			
 		}
 		for(object in map.getObjectGroup("Player").objects) {
 			player = new entities.Player(object.x, object.y);
@@ -38,8 +43,8 @@ class MainScene extends Scene
 		addGraphic(new Text("So you want to loose, huh?", 135*32, 67*32, 0, 0, {size: 32}));
 		addGraphic(new Text("Ok...", 167*32, 66*32, 0, 0, {size: 32}));
 		addGraphic(new Text("You'll have to kill yourself.", 173*32, 66*32, 0, 0, {size: 32}));
-		addGraphic(new Text("But you can't.", 177*32, 86*32, 0, 0, {size: 32}));
-		addGraphic(new Text("You can just win.", 177*32, 87*32, 0, 0, {size: 32}));
+		addGraphic(new Text("But you can't...", 178*32, 86*32, 0, 0, {size: 32}));
+		addGraphic(new Text("you can just win.", 178*32, 87*32, 0, 0, {size: 32}));
 
 		camera.x = player.x - HXP.width / 2;
 		camera.y = player.y - HXP.height / 2;
