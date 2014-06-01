@@ -71,6 +71,7 @@ class Player extends Entity {
                 xVelocity = 0;
             } else {
                 f = collide("block", x + xVelocity, y + height);
+
             }
         }
 
@@ -125,16 +126,16 @@ class Player extends Entity {
 	}
 
 	private function onFloor():Bool {
-		//for(i in Std.int(y) ... Std.int(y + yVelocity)) {
-            var f:Entity = collide("block", x, y + yVelocity);
+		for(i in Std.int(y + height) ... Std.int(y + height + yVelocity)) {
+            var f:Entity = collide("block", x, i);
             if(f != null) {
                 if(f.y >= this.y + height) {
-                    moveTo(x, f.y - 32);
+                    moveTo(x, f.y - height);
                     jumpEnabled = true;
                     return true;
                 }
             }
-        //}
+        }
         return false;
 	}
 
