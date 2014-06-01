@@ -51,7 +51,7 @@ class MainScene extends Scene
 
 	private function adjustCamera() {
 		camera.x = player.x - HXP.width / 2 - player.xVelocity * 2;
-		camera.y = player.y - HXP.height / 2 - player.yVelocity * 3;
+		camera.y = player.y - HXP.height / 1.5 - player.yVelocity * 1;
 	}
 
 	public override function update() {

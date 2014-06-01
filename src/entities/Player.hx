@@ -8,9 +8,9 @@ import com.haxepunk.utils.Key;
 
 class Player extends Entity {
 
-	private var xVelocity:Float;
+	public var xVelocity:Float;
     private var xAcceleration:Float;
-    private var yVelocity:Float;
+    public var yVelocity:Float;
     private var yAcceleration:Float;
 
     private static inline var xMaxVelocity:Float = 8;
@@ -20,16 +20,28 @@ class Player extends Entity {
     private static inline var ySpeed:Float = 2;
     private static inline var gravity:Float = 0.15;
 
+    private var leftImage:Image;
+    private var rightImage:Image;
+    private var playerImage:Image;
+    private var jumpingImage:Image;
+
     private var jumpEnabled:Bool;
 
 	public function new(x:Float, y:Float) {
 		super(x, y);
 		setHitbox(32, 32);
         type = "player";
-		graphic = new Image("graphics/player/player.png");
+
+        leftImage = new Image("graphics/player/playerLeft.png");
+        rightImage = new Image("graphics/player/playerRight.png");
+        playerImage = new Image("graphics/player/player.png");
+        jumpingImage = new Image("graphics/player/playerJumping.png");
+		graphic = playerImage;
+
 		Input.define("right", [Key.D]);
 		Input.define("left", [Key.A]);
         Input.define("up", [Key.W, Key.SPACE]);
+        
 		xVelocity = 0;
 		yVelocity = 0;
 		jumpEnabled = false;
@@ -111,11 +123,25 @@ class Player extends Entity {
 
     }
 
+    private function updateAnimation() {
+        if(yVelocity != 0) {
+            graphic = jumpingImage;
+        } else {
+            if(xVelocity > 0) {
+                graphic = rightImage;
+            } else if(xVelocity < 0) {
+                graphic = leftImage;
+            } else {
+                graphic = playerImage;
+            }
+        }
+    }
+
 	private function onCeiling():Bool {
 		var f:Entity = collide("block", x, y + yVelocity);
 		if(f != null) {
 			if(f.y <= this.y) {
-                moveTo(x, f.y + 35);
+                moveTo(x, f.y + 32);
 				return true;
 			} else {
 				return false;
@@ -126,8 +152,8 @@ class Player extends Entity {
 	}
 
 	private function onFloor():Bool {
-		for(i in Std.int(y + height) ... Std.int(y + height + yVelocity)) {
-            var f:Entity = collide("block", x, i);
+		for(i in Std.int(y) ... Std.int(y + yVelocity - 1)) {
+            var f:Entity = collide("block", x, i + height);
             if(f != null) {
                 if(f.y >= this.y + height) {
                     moveTo(x, f.y - height);
@@ -142,6 +168,7 @@ class Player extends Entity {
 	public override function update() {
 		handleInput();
 		move();
+        updateAnimation();
 		super.update();
 	}
 }

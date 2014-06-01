@@ -674,6 +674,24 @@
   <object gid="1" x="5952" y="2624"/>
   <object gid="1" x="5920" y="2624"/>
   <object gid="1" x="5888" y="2624"/>
+  <object gid="1" x="992" y="2752"/>
+  <object gid="1" x="992" y="2752"/>
+  <object gid="1" x="1056" y="2752"/>
+  <object gid="1" x="1024" y="2752"/>
+  <object gid="1" x="1088" y="2752"/>
+  <object gid="1" x="1120" y="2752"/>
+  <object gid="1" x="1152" y="2752"/>
+  <object gid="1" x="1184" y="2752"/>
+  <object gid="1" x="1216" y="2752"/>
+  <object gid="1" x="1024" y="2720"/>
+  <object gid="1" x="1056" y="2720"/>
+  <object gid="1" x="1088" y="2720"/>
+  <object gid="1" x="1152" y="2720"/>
+  <object gid="1" x="1120" y="2720"/>
+  <object gid="1" x="1120" y="2688"/>
+  <object gid="1" x="1088" y="2688"/>
+  <object gid="1" x="1056" y="2688"/>
+  <object gid="1" x="1088" y="2656"/>
  </objectgroup>
  <objectgroup name="Player" width="500" height="100">
   <object gid="2" x="320" y="2816"/>
