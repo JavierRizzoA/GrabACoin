@@ -716,15 +716,8 @@
   <object gid="1" x="6208" y="3168"/>
   <object gid="1" x="6272" y="3168"/>
   <object gid="1" x="6304" y="3168"/>
-  <object gid="1" x="5984" y="3136"/>
-  <object gid="1" x="6304" y="3136"/>
   <object gid="1" x="6336" y="3168"/>
-  <object gid="1" x="6336" y="3136"/>
-  <object gid="1" x="6336" y="3104"/>
   <object gid="1" x="6368" y="3168"/>
-  <object gid="1" x="6368" y="3136"/>
-  <object gid="1" x="6368" y="3104"/>
-  <object gid="1" x="6368" y="3072"/>
   <object gid="1" x="6400" y="3168"/>
   <object gid="1" x="6400" y="3136"/>
   <object gid="1" x="6400" y="3104"/>
@@ -749,9 +742,17 @@
   <object gid="3" x="6464" y="2848"/>
   <object gid="3" x="6464" y="2784"/>
   <object gid="3" x="6464" y="2816"/>
+  <object gid="1" x="416" y="2752"/>
+  <object gid="1" x="6400" y="3008"/>
+  <object gid="1" x="6048" y="3136"/>
+  <object gid="1" x="6048" y="3104"/>
+  <object gid="1" x="6048" y="3072"/>
+  <object gid="1" x="6048" y="3040"/>
+  <object gid="1" x="6048" y="3008"/>
+  <object gid="1" x="6080" y="3136"/>
  </objectgroup>
  <objectgroup name="Player" width="500" height="100">
-  <object gid="2" x="320" y="2816"/>
+  <object gid="2" x="5760" y="2688"/>
  </objectgroup>
  <objectgroup name="Coins" width="500" height="100">
   <object gid="3" x="736" y="2816"/>
@@ -882,5 +883,6 @@
   <object gid="3" x="5760" y="3072"/>
   <object gid="3" x="5696" y="3072"/>
   <object gid="3" x="5728" y="3072"/>
+  <object gid="3" x="6048" y="2912"/>
  </objectgroup>
 </map>

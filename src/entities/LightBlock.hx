@@ -9,6 +9,7 @@ class LightBlock extends Block {
 
 	public function new(x:Float, y:Float) {
 		super(x, y);
+		graphic = new Image("graphics/light-block.png");
 		
 	}
 

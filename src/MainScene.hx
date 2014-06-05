@@ -36,6 +36,7 @@ class MainScene extends Scene
 			add(new entities.Coin(object.x, object.y));
 		}
 
+		addGraphic(new Text("This is a very easy game.", 4*32, 80*32, 0, 0, {size: 32}));
 		addGraphic(new Text("Seriously you can't win?", 46*32, 76*32, 0, 0, {size: 32}));
 		addGraphic(new Text("This is like the easiest game ever...", 46*32, 77*32, 0, 0, {size: 32}));
 		addGraphic(new Text("You're a failure in life.", 73*32, 67*32, 0, 0, {size: 32}));
