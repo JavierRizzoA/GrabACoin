@@ -7,7 +7,7 @@ class LightBlock extends Block {
 
 	var yVelocity = 0;
 
-	public function new(x:Float, y:Float) {
+	public function new(x:Int, y:Int) {
 		super(x, y);
 		graphic = new Image("graphics/light-block.png");
 		

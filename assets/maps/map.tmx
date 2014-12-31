@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="500" height="100" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="100" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="block" tilewidth="32" tileheight="32">
   <image source="../graphics/block.png" width="32" height="32"/>
  </tileset>
@@ -9,7 +9,7 @@
  <tileset firstgid="3" name="coin" tilewidth="32" tileheight="32">
   <image source="../graphics/coin.png" width="32" height="32"/>
  </tileset>
- <objectgroup name="Blocks" width="500" height="100">
+ <objectgroup name="Blocks">
   <object gid="1" x="0" y="2400"/>
   <object gid="1" x="0" y="2464"/>
   <object gid="1" x="0" y="2496"/>
@@ -751,10 +751,10 @@
   <object gid="1" x="6048" y="3008"/>
   <object gid="1" x="6080" y="3136"/>
  </objectgroup>
- <objectgroup name="Player" width="500" height="100">
-  <object gid="2" x="5760" y="2688"/>
+ <objectgroup name="Player">
+  <object gid="2" x="320" y="2816"/>
  </objectgroup>
- <objectgroup name="Coins" width="500" height="100">
+ <objectgroup name="Coins">
   <object gid="3" x="736" y="2816"/>
   <object gid="3" x="992" y="2784"/>
   <object gid="3" x="1024" y="2784"/>

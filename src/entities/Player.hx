@@ -1,192 +1,163 @@
 package entities;
 
+import openfl.geom.Point;
 import com.haxepunk.Entity;
-import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
+import com.haxepunk.graphics.Image;
+import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.utils.Input;
 import com.haxepunk.utils.Key;
 import com.haxepunk.Sfx;
 
-class Player extends Entity {
+class Player extends Physics {
 
-	public var xVelocity:Float;
-    private var xAcceleration:Float;
-    public var yVelocity:Float;
-    private var yAcceleration:Float;
+	private static inline var GRAPHIC_FRAME_TIME:Float = 0.02;
 
-    private static inline var xMaxVelocity:Float = 8;
-    private static inline var xSpeed:Float = 2;
-    private static inline var floorDrag:Float = 0.8;
-    private static inline var yMaxVelocity:Float = 16;
-    private static inline var ySpeed:Float = 2;
-    private static inline var gravity:Float = 0.15;
+	public var sprite:Spritemap;
 
-    private var leftImage:Image;
-    private var rightImage:Image;
-    private var playerImage:Image;
-    private var jumpingImage:Image;
+	public var movement:Float;
+	public var jump:Float;
 
-    private var jumpEnabled:Bool;
+	public var direction:Bool; //true = right, false = left
+
+	public var onGround:Bool;
+
+	public var wallJumping:Int; //0 = no, 1 = left, 2 = right
+
+	public var doubleJump:Bool;
+
+	public var dead:Bool;
+	public var start:Point;
+
+	private var walkingImages:Array<Image>;
+	private var currentWalkingImage:Int;
+	private var walkingImageTime:Float = 0;
+	private var duckImage:Image;
+	private var hurtImage:Image;
+	private var jumpImage:Image;
+	private var standImage:Image;
+	private var flipGraphic:Bool;
+	private var wasWalking:Bool;
 
     private var jumpSound:Sfx;
 
-	public function new(x:Float, y:Float) {
+	public function new(x:Int, y:Int) {
 		super(x, y);
+
+		movement = 1;
+		jump = 8;
+
+		direction = true;
+		onGround = false;
+		wallJumping = 0;
+		doubleJump = false;
+
+		dead = false;
+		start = new Point();
+
+		mGravity = 0.4;
+		mMaxSpeed = new Point(4, 16);
+		mFriction = new Point(0.4, 0.5);
+
 		setHitbox(32, 32);
-        type = "player";
-
-        leftImage = new Image("graphics/player/playerLeft.png");
-        rightImage = new Image("graphics/player/playerRight.png");
-        playerImage = new Image("graphics/player/player.png");
-        jumpingImage = new Image("graphics/player/playerJumping.png");
-
-        #if flash
-        jumpSound = new Sfx("audio/jump.mp3");
-        #else
-        jumpSound = new Sfx("audio/jump.ogg");
-        #end
-
-		graphic = playerImage;
+		graphic = new Image("graphics/player/player.png");
+		type = "player";
 
 		Input.define("right", [Key.D, Key.RIGHT]);
 		Input.define("left", [Key.A, Key.LEFT]);
-        Input.define("up", [Key.W, Key.SPACE, Key.UP]);
+        Input.define("up", [Key.W, Key.UP]);
+        Input.define("down", [Key.S, Key.DOWN]);
+        Input.define("jump", [Key.SPACE]);
 
-		xVelocity = 0;
-		yVelocity = 0;
-		jumpEnabled = false;
+        walkingImages = [new Image("graphics/player/playerRight.png")];
+		currentWalkingImage = 0;
+		walkingImageTime = 0;
+		jumpImage = new Image("graphics/player/playerJumping.png");
+		standImage = new Image("graphics/player/player.png");
+		wasWalking = false;
 
+#if flash
+        jumpSound = new Sfx("audio/jump.mp3");
+#else
+        jumpSound = new Sfx("audio/jump.ogg");
+#end
 	}
 
-	private function move() {
+	public override function update():Void {
+		onGround = false;
+		if(collide(solid, x, y + 1) != null) {
+			onGround = true;
+			wallJumping = 0;
+			doubleJump = true;
+		}
 
-        xVelocity += xAcceleration * xSpeed;
-        yVelocity += yAcceleration * ySpeed;
+		acceleration.x = 0;
 
-        if (Math.abs(xVelocity) > xMaxVelocity) {
-            xVelocity = xMaxVelocity * HXP.sign(xVelocity);
-        }
+		if (Input.check("left") && speed.x > -mMaxSpeed.x) { acceleration.x = - movement; direction = false; }
+		if (Input.check("right") && speed.x < mMaxSpeed.x) { acceleration.x = movement; direction = true; }
 
-        if(Math.abs(yVelocity) > yMaxVelocity) {
-            if(yVelocity < 0) {
-                yVelocity = yMaxVelocity * HXP.sign(yVelocity);
-                jumpEnabled = false;
-            }
-        }
+		if ((!Input.check("left") && !Input.check("right")) || Math.abs(speed.x) > mMaxSpeed.x) {
+			friction(true, false);
+		}
 
-        if (xVelocity < 0) {
-            xVelocity = Math.min(xVelocity + floorDrag, 0);
-        } else if (xVelocity > 0) {
-            xVelocity = Math.max(xVelocity - floorDrag, 0);
-        }
-
-        if(yVelocity < 0) {
-            yVelocity = Math.min(yVelocity + gravity, 0);
-        }
-
-        if(yVelocity > 0 && onFloor()) {
-            yVelocity = 0;
-        }
-
-        if(xVelocity != 0) {
-            var f:Entity = collide("block", x + xVelocity, y);
-            if(f != null) {
-                xVelocity = 0;
-            } else {
-                f = collide("block", x + xVelocity, y + height);
-                if(f != null && f.y < y) {
-                    xVelocity = 0;
-                }
-
-            }
-        }
-
-        moveBy(xVelocity, yVelocity);
-    }
-
-    private function handleInput()
-    {
-        xAcceleration = 0;
-        yAcceleration = 0;
-
-        if (Input.check("left")) {
-
-            xAcceleration = -1;
-        }
-
-        if (Input.check("right")) {
-            xAcceleration = 1;
-        }
-
-        if(Input.released("up")) {
-            jumpEnabled = false;
-        }
-
-        if (Input.check("up") && jumpEnabled) {
-            yAcceleration = -1;
-            if(yVelocity == 0) {
+		if (Input.pressed("jump"))
+		{
+			var jumped:Bool = false;
+			
+			if (onGround) { 
+				speed.y = -jump; 
+				jumped = true; 
                 jumpSound.play();
-                jumpSound.volume = .25;
-            }
-        } else {
-            if(!onFloor()) {
-                yAcceleration = 1;
-            }
-        }
+			}
+			
+			
+			if (!onGround && !jumped && doubleJump) { 
+				speed.y = -jump;
+				doubleJump = false;
+				wallJumping = 0;
+                jumpSound.play();
+			}
+		}
+		gravity();
+		maxSpeed(false, true);
+		if (speed.y < 0 && !Input.check("jump")) { gravity(); gravity(); }
+		motion();
+		if(collide("Spikes", x, y) != null && speed.y > 0) {
+			killme();
+		}
 
-        if(onCeiling()) {
-            yAcceleration = 1;
-            jumpEnabled = false;
-        }
-
-    }
-
-    private function updateAnimation() {
-        if(yVelocity != 0) {
-            graphic = jumpingImage;
-        } else {
-            if(xVelocity > 0) {
-                graphic = rightImage;
-            } else if(xVelocity < 0) {
-                graphic = leftImage;
-            } else {
-                graphic = playerImage;
-            }
-        }
-    }
-
-	private function onCeiling():Bool {
-		var f:Entity = collide("block", x, y + yVelocity);
-		if(f != null) {
-			if(f.y <= this.y) {
-                moveTo(x, f.y + 31);
-				return true;
+		if(onGround) {
+			walkingImageTime += HXP.elapsed;
+			if(Math.abs(speed.x) > 0) {
+				if(!wasWalking) {
+					currentWalkingImage = 0;
+					wasWalking = true;
+					walkingImageTime = 0;
+				}
+				if(walkingImageTime >= GRAPHIC_FRAME_TIME) {
+					currentWalkingImage ++;
+					currentWalkingImage %= 7;
+					walkingImageTime = 0;
+				}
+				if(speed.x > 0) {
+					walkingImages[0].flipped = false;
+				} else {
+					walkingImages[0].flipped = true;
+				}
+				graphic = walkingImages[0];
 			} else {
-				return false;
+				standImage.flipped = !direction;
+				graphic = standImage;
 			}
 		} else {
-			return false;
+			jumpImage.flipped = !direction;
+			graphic = jumpImage;
 		}
+
 	}
 
-	private function onFloor():Bool {
-		for(i in Std.int(y) ... Std.int(y + yVelocity - 1)) {
-            var f:Entity = collide("block", x, i + height);
-            if(f != null) {
-                if(f.y >= this.y + height) {
-                    moveTo(x, f.y - height);
-                    jumpEnabled = true;
-                    return true;
-                }
-            }
-        }
-        return false;
+	public function killme():Void {
+		dead = true;
 	}
 
-	public override function update() {
-		handleInput();
-		move();
-        updateAnimation();
-		super.update();
-	}
 }
