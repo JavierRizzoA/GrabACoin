@@ -41,7 +41,7 @@ class MainScene extends Scene
 		addGraphic(new Text("This is like the easiest game ever...", 46*32, 77*32, 0, 0, {size: 32}));
 		addGraphic(new Text("You're a failure in life.", 73*32, 67*32, 0, 0, {size: 32}));
 		addGraphic(new Text("Here, have some coins and just win. Please.", 106*32, 66*32, 0, 0, {size: 32}));
-		addGraphic(new Text("So you want to loose, huh?", 135*32, 67*32, 0, 0, {size: 32}));
+		addGraphic(new Text("So you want to lose, huh?", 135*32, 67*32, 0, 0, {size: 32}));
 		addGraphic(new Text("Ok...", 167*32, 66*32, 0, 0, {size: 32}));
 		addGraphic(new Text("You'll have to kill yourself.", 173*32, 66*32, 0, 0, {size: 32}));
 		addGraphic(new Text("But you can't...", 178*32, 86*32, 0, 0, {size: 32}));
