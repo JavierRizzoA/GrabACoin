@@ -8,11 +8,14 @@ import com.haxepunk.Sfx;
 class Coin extends Entity {
 
 	private var sound:Sfx;
+    private var image:Image;
 
 	public function new(x:Float, y:Float) {
 		super(x, y);
-		setHitbox(32, 32);
-		graphic = new Image("graphics/coin.png");
+		setHitbox(Std.int(96 * Globals.scaleX), Std.int(96 * Globals.scaleX));
+        image = new Image("graphics/coin.png");
+        image.scale = Globals.scaleX;
+		graphic = image;
 		type = "coin";
 
 		#if flash

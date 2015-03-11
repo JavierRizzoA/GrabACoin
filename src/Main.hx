@@ -8,6 +8,7 @@ class Main extends Engine
 	{
 #if debug
 		HXP.console.enable();
+		//HXP.scene = new MainScene();
 		HXP.scene = new MainScene();
 #else
 		HXP.scene = new scenes.StartScene();
